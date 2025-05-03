@@ -10,12 +10,12 @@ use Illuminate\Foundation\Http\FormRequest;
  *     title="Event Request",
  *     description="Event request body data",
  *     required={"title", "start_date"},
- *     @OA\Property(property="title", type="string", example="Conference"),
- *     @OA\Property(property="description", type="string", example="Annual tech conference"),
- *     @OA\Property(property="location", type="string", example="Convention Center"),
+ *     @OA\Property(property="title", type="string", example="Taste of Cultures"),
+ *     @OA\Property(property="description", type="string", example="International food and culture festival celebrating global diversity in Brussels."),
+ *     @OA\Property(property="location", type="string", example="Kaaistudio’s, Brussels"),
  *     @OA\Property(property="start_date", type="string", format="date-time", example="2023-10-15T09:00:00"),
  *     @OA\Property(property="end_date", type="string", format="date-time", example="2023-10-17T18:00:00"),
- *     @OA\Property(property="organizer", type="string", example="Tech Company Ltd")
+ *     @OA\Property(property="organizer", type="string", example="CultuurConnect")
  * )
  */
 class EventRequest extends FormRequest

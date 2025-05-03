@@ -11,9 +11,72 @@
                 "tags": [
                     "Events"
                 ],
-                "summary": "Get all events",
-                "description": "Display a listing of events.",
+                "summary": "Get all events with optional filtering",
                 "operationId": "e529c81e6aaec82f49950a87ed881f57",
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "location",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "organizer",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "start_date",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "end_date",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort_direction",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful operation",
@@ -35,21 +98,20 @@
                     "Events"
                 ],
                 "summary": "Create a new event",
-                "description": "Store a newly created event.",
                 "operationId": "e958e1c6c275d5f9b7ebcd837903d0ef",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/EventRequest"
+                                "$ref": "#/components/schemas/EventCreateRequest"
                             }
                         }
                     }
                 },
                 "responses": {
                     "201": {
-                        "description": "Event created successfully",
+                        "description": "Event created",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -57,9 +119,6 @@
                                 }
                             }
                         }
-                    },
-                    "422": {
-                        "description": "Validation error"
                     }
                 }
             }
@@ -69,14 +128,12 @@
                 "tags": [
                     "Events"
                 ],
-                "summary": "Get event by ID",
-                "description": "Display the specified event.",
+                "summary": "Get a single event by ID",
                 "operationId": "c0f602d773798994c228d99dbd63b842",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Event ID",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -85,7 +142,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Event found",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -103,14 +160,12 @@
                 "tags": [
                     "Events"
                 ],
-                "summary": "Update an existing event",
-                "description": "Update the specified event.",
+                "summary": "Update an event",
                 "operationId": "8b1dd7f57d8fbd2e85af2762950e0b1d",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Event ID",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -122,14 +177,14 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/EventRequest"
+                                "$ref": "#/components/schemas/EventCreateRequest"
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "Event updated successfully",
+                        "description": "Event updated",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -140,9 +195,6 @@
                     },
                     "404": {
                         "description": "Event not found"
-                    },
-                    "422": {
-                        "description": "Validation error"
                     }
                 }
             },
@@ -151,13 +203,11 @@
                     "Events"
                 ],
                 "summary": "Delete an event",
-                "description": "Remove the specified event.",
                 "operationId": "deca25daa2d423da0ff6b6677d92545b",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Event ID",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -166,7 +216,7 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "Event deleted successfully"
+                        "description": "Event deleted"
                     },
                     "404": {
                         "description": "Event not found"
@@ -177,7 +227,7 @@
     },
     "components": {
         "schemas": {
-            "EventRequest": {
+            "EventCreateRequest": {
                 "title": "Event Request",
                 "description": "Event request body data",
                 "required": [
@@ -187,15 +237,15 @@
                 "properties": {
                     "title": {
                         "type": "string",
-                        "example": "Conference"
+                        "example": "Taste of Cultures"
                     },
                     "description": {
                         "type": "string",
-                        "example": "Annual tech conference"
+                        "example": "International food and culture festival celebrating global diversity in Brussels."
                     },
                     "location": {
                         "type": "string",
-                        "example": "Convention Center"
+                        "example": "Kaaistudio's, Brussels"
                     },
                     "start_date": {
                         "type": "string",
@@ -209,43 +259,81 @@
                     },
                     "organizer": {
                         "type": "string",
-                        "example": "Tech Company Ltd"
+                        "example": "CultuurConnect"
+                    }
+                },
+                "type": "object"
+            },
+            "EventRequest": {
+                "title": "Event Request",
+                "description": "Event request body data",
+                "required": [
+                    "title",
+                    "start_date"
+                ],
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "Taste of Cultures"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "International food and culture festival celebrating global diversity in Brussels."
+                    },
+                    "location": {
+                        "type": "string",
+                        "example": "Kaaistudio’s, Brussels"
+                    },
+                    "start_date": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2023-10-15T09:00:00"
+                    },
+                    "end_date": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2023-10-17T18:00:00"
+                    },
+                    "organizer": {
+                        "type": "string",
+                        "example": "CultuurConnect"
                     }
                 },
                 "type": "object"
             },
             "Event": {
-                "title": "Event",
-                "description": "Event model",
+                "title": "Event Model",
+                "description": "Event model data",
                 "properties": {
                     "id": {
                         "type": "integer",
-                        "format": "int64",
                         "example": 1
                     },
                     "title": {
                         "type": "string",
-                        "example": "Conference"
+                        "example": "Taste of Cultures"
                     },
                     "description": {
                         "type": "string",
-                        "example": "Annual tech conference"
+                        "example": "International food and culture festival celebrating global diversity in Brussels."
                     },
                     "location": {
                         "type": "string",
-                        "example": "Convention Center"
+                        "example": "Kaaistudio's, Brussels"
                     },
                     "start_date": {
                         "type": "string",
-                        "format": "date-time"
+                        "format": "date-time",
+                        "example": "2023-10-15T09:00:00"
                     },
                     "end_date": {
                         "type": "string",
-                        "format": "date-time"
+                        "format": "date-time",
+                        "example": "2023-10-17T18:00:00"
                     },
                     "organizer": {
                         "type": "string",
-                        "example": "Tech Company Ltd"
+                        "example": "CultuurConnect"
                     },
                     "created_at": {
                         "type": "string",
@@ -263,7 +351,7 @@
     "tags": [
         {
             "name": "Events",
-            "description": "Events"
+            "description": "API Endpoints for managing events"
         }
     ]
 }
