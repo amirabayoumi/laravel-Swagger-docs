@@ -2,10 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\CategoryController;
+
 Route::get('/', function () {
     return view('welcome');
 });
 
+// Jetstream dashboard route
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -14,4 +18,7 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::resource('categories', CategoryController::class);
+    Route::resource('events', EventController::class);
 });
