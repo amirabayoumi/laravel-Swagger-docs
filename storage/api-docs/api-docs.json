@@ -223,6 +223,140 @@
                     }
                 }
             }
+        },
+        "/api/categories": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get all categories",
+                "operationId": "3f5817a34833d0a1f4af4548dd3aeaba",
+                "responses": {
+                    "200": {
+                        "description": "All categories"
+                    }
+                }
+            }
+        },
+        "/categories/create": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Show form to create a new category",
+                "operationId": "3ef7e0bc5399e20ab25ef92f99cb0dae",
+                "responses": {
+                    "200": {
+                        "description": "Create category form"
+                    }
+                }
+            }
+        },
+        "/categories": {
+            "post": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Create a new category",
+                "operationId": "bb02f0320882db37f99574196577e446",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CategoryRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Category created successfully"
+                    }
+                }
+            }
+        },
+        "/categories/{category}": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Show a category",
+                "operationId": "1d1c5342ee2901551673abd31b49dc85",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/category"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Category details"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Delete a category",
+                "operationId": "230b7cb656677a24caa0012ba818db7f",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/category"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Category deleted successfully"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Update an existing category",
+                "operationId": "01d3c61b2eea33a27b0cd17d6a7abaae",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/category"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CategoryRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Category updated successfully"
+                    }
+                }
+            }
+        },
+        "/categories/{category}/edit": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Show form to edit a category",
+                "operationId": "40305ea3ad8a499a88287e1188719cda",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/category"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Edit category form"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -264,6 +398,24 @@
                 },
                 "type": "object"
             },
+            "CategoryRequest": {
+                "title": "Category Request",
+                "description": "Category request body data",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Food"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Events related to food and dining."
+                    }
+                },
+                "type": "object"
+            },
             "EventRequest": {
                 "title": "Event Request",
                 "description": "Event request body data",
@@ -297,6 +449,29 @@
                     "organizer": {
                         "type": "string",
                         "example": "CultuurConnect"
+                    }
+                },
+                "type": "object"
+            },
+            "Category": {
+                "title": "Category Model",
+                "description": "Category model data",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Music"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 },
                 "type": "object"
@@ -346,12 +521,28 @@
                 },
                 "type": "object"
             }
+        },
+        "parameters": {
+            "category": {
+                "name": "category",
+                "in": "path",
+                "description": "ID of the category",
+                "required": true,
+                "schema": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
         }
     },
     "tags": [
         {
             "name": "Events",
             "description": "API Endpoints for managing events"
+        },
+        {
+            "name": "Categories",
+            "description": "Categories"
         }
     ]
 }
