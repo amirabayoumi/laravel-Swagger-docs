@@ -19,6 +19,8 @@ class EventResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'location' => $this->location,
+            'latitude' => $this->latitude,  // Add this line
+            'longitude' => $this->longitude, // Add this line
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
             'organizer' => $this->organizer,
