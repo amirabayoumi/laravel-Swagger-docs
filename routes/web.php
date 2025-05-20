@@ -20,5 +20,5 @@ Route::middleware([
     })->name('dashboard');
 
     // Route::resource('categories', CategoryController::class);
-    Route::resource('events', EventController::class);
+    // Route::resource('events', EventController::class);
 });

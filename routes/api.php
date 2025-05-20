@@ -12,7 +12,7 @@ Route::get('/user', function (Request $request) {
 
 // Event routes
 Route::apiResource('events', EventController::class);
-// Route::apiResource('categories', CategoryController::class);
+Route::apiResource('categories', CategoryController::class);
 
 
 //api/token Auth , to be used to see any api (sanctom token)
