@@ -42,37 +42,36 @@ class EventResource extends Resource
                             ->required()
                             ->searchable()
                             ->getSearchResultsUsing(function (string $search) {
-                                if (strlen($search) < 3) {
+                                if (strlen($search) < 1) {
                                     return [];
                                 }
 
                                 try {
-                                    $response = Http::withHeaders([
-                                        'User-Agent' => 'LaravelApp/1.0'
-                                    ])->get('https://nominatim.openstreetmap.org/search', [
-                                        'q' => $search,
-                                        'format' => 'json',
-                                        'limit' => 5,
-                                        'countrycodes' => 'be',
-                                        'addressdetails' => 1
-                                    ]);
+                                    $results = cache()->remember("location_search_" . md5($search), 60, function () use ($search) {
+                                        $response = Http::withHeaders([
+                                            'User-Agent' => 'LaravelApp/1.0'
+                                        ])->get('https://nominatim.openstreetmap.org/search', [
+                                            'q' => $search,
+                                            'format' => 'json',
+                                            'limit' => 5,
+                                            'countrycodes' => 'be',
+                                            'addressdetails' => 1
+                                        ]);
 
-                                    if ($response->successful()) {
-                                        $results = $response->json();
-                                        $options = [];
+                                        return $response->successful() ? $response->json() : [];
+                                    });
 
-                                        foreach ($results as $result) {
-                                            $display = $result['display_name'];
-                                            $options[$display] = $display;
-                                        }
-
-                                        return $options;
+                                    $options = [];
+                                    foreach ($results as $result) {
+                                        $display = $result['display_name'];
+                                        $options[$display] = $display;
                                     }
+
+                                    return $options;
                                 } catch (\Exception $e) {
                                     Log::error('Autocomplete error: ' . $e->getMessage());
+                                    return [];
                                 }
-
-                                return [];
                             })
                             ->getOptionLabelUsing(fn($value): ?string => $value)
                             ->afterStateUpdated(function ($state, callable $set) {
