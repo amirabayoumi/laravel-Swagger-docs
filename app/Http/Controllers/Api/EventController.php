@@ -57,7 +57,7 @@ class EventController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Event::query();
+        $query = Event::with('categories');
 
         if ($request->has('title')) {
             $query->where('title', 'like', '%' . $request->title . '%');
@@ -125,6 +125,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
+        $event->load('categories');
         return new EventResource($event);
     }
 

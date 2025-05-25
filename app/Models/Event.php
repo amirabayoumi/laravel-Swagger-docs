@@ -81,8 +81,11 @@ class Event extends Model
         return null;
     }
 
+    /**
+     * Get the categories for the event.
+     */
     public function categories()
     {
-        return $this->belongsToMany(Category::class, 'category_event')->withTimestamps();
+        return $this->belongsToMany(Category::class);
     }
 }
