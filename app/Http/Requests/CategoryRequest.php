@@ -15,10 +15,7 @@ use Illuminate\Foundation\Http\FormRequest;
  * )
  */
 class CategoryRequest extends FormRequest
-
 {
-
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -42,13 +39,3 @@ class CategoryRequest extends FormRequest
         ];
     }
 }
-/**
- * @OA\Schema(
- *     schema="CategoryRequest",
- *     title="Category Request",
- *     description="Category request body data",
- *     required={"name"},
- *     @OA\Property(property="name", type="string", example="Food"),
- *     @OA\Property(property="description", type="string", example="Events related to food and dining.")
- * )
- */

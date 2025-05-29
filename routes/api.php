@@ -3,8 +3,9 @@
 use App\Http\Controllers\Api\EventController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Api\CategoryController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Api\RegisterController;
 
 
 Route::get('/user', function (Request $request) {
@@ -12,8 +13,19 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 // Event routes
-Route::apiResource('events', EventController::class);
-Route::apiResource('categories', CategoryController::class);
+
+
+Route::controller(RegisterController::class)->group(function () {
+    Route::post('register', 'register');
+    Route::post('login', 'login');
+});
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+    Route::apiResource('events', EventController::class);
+    Route::apiResource('categories', CategoryController::class);
+});
 
 
 //api/token Auth , to be used to see any api (sanctom token)
