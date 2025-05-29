@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Auth;
 
+
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
@@ -31,9 +32,5 @@ Route::apiResource('categories', CategoryController::class);
 //         return response()->json(['token' => $token]);
 //     }
 
-//     return response()->json(['error' => 'Unauthorized'], 401);  
-
+//     return response()->json(['error' => 'Unauthorized'], 401);
 // });
-
-
-

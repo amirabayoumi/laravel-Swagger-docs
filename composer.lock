@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7f8731962d562058f8957eeb8d04c0f1",
+    "content-hash": "eb228b2c5f63441ae9d1cd74b72e8356",
     "packages": [
         {
             "name": "adrianorosa/laravel-geolocation",

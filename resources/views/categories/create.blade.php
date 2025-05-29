@@ -1,38 +1,41 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Create Category') }}
-        </h2>
-    </x-slot>
+<!DOCTYPE html>
+<html lang="en">
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-                <form method="POST" action="{{ route('categories.store') }}">
-                    @csrf
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Category</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
 
-                    <div class="mb-4">
-                        <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
-                        <input type="text" name="name" id="name" value="{{ old('name') }}"
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('name') border-red-500 @enderror"
-                            required>
-                        @error('name')
-                        <p class="text-red-500 text-xs italic mt-2">{{ $message }}</p>
-                        @enderror
-                    </div>
+<body>
+    <div class="container mt-5">
+        <h2>Create New Category</h2>
 
-
-
-                    <div class="flex items-center justify-between">
-                        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                            Create Category
-                        </button>
-                        <a href="{{ route('categories.index') }}" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
-                            Cancel
-                        </a>
-                    </div>
-                </form>
-            </div>
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error) <li>{{ $error }}</li> @endforeach
+            </ul>
         </div>
+        @endif
+
+        <form action="{{ route('categories.store') }}" method="POST">
+            @csrf
+
+            <div class="mb-3">
+                <label for="name" class="form-label">Category Name</label>
+                <input type="text" class="form-control" name="name" value="{{ old('name') }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" name="description" rows="3">{{ old('description') }}</textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create Category</button>
+        </form>
     </div>
-</x-app-layout>
+</body>
+
+</html>

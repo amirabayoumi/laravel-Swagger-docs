@@ -15,7 +15,7 @@
                 <h2>Edit Event</h2>
             </div>
             <div class="col-md-4 text-end">
-                <a href="{{ route('events.index') }}" class="btn btn-secondary">Back to List</a>
+                <a href="{{ route('events') }}" class="btn btn-secondary">Back to List</a>
             </div>
         </div>
 

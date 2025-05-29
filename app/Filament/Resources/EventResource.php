@@ -215,7 +215,7 @@ class EventResource extends Resource
                                             // If we get here, we couldn't find coordinates
                                             Notification::make()
                                                 ->title('Location Not Found')
-                                                ->body("Please try a more specific address (e.g. 'Street, City') or pick a location on the map")
+                                                ->body("Please try a more specific address (e.g. 'Street, City') ")
                                                 ->warning()
                                                 ->send();
                                         } catch (\Exception $e) {

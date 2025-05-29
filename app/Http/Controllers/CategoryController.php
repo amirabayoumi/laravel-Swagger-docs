@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CategoryRequest;
-use App\Http\Resources\CategoryResource;
+
 use App\Models\Category;
-use OpenApi\Annotations as OA;
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 
 /**
@@ -17,7 +18,7 @@ use OpenApi\Annotations as OA;
  * )
  */
 
- /**
+/**
  * @OA\Parameter(
  *     parameter="category",
  *     name="category",
@@ -39,7 +40,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return CategoryResource::collection(Category::all());
+        $categories = Category::all();
+        return view('categories.index', compact('categories'));
     }
 
     /**
@@ -67,11 +69,20 @@ class CategoryController extends Controller
      *     @OA\Response(response=201, description="Category created successfully")
      * )
      */
-    public function store(CategoryRequest $request)
+    public function store(Request $request)
     {
-        Category::create($request->validated());
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:1000',
+        ]);
 
-        return redirect()->route('categories.index')->with('success', 'Category created successfully.');
+        $validated['user_id'] = Auth::id();
+
+        // Create the category
+        $category = Category::create($validated);
+
+        return redirect()->route('categories')
+            ->with('success', 'Category created successfully.');
     }
 
     /**
@@ -115,11 +126,18 @@ class CategoryController extends Controller
      *     @OA\Response(response=200, description="Category updated successfully")
      * )
      */
-    public function update(CategoryRequest $request, Category $category)
+    public function update(Request $request, Category $category)
     {
-        $category->update($request->validated());
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:1000',
+        ]);
 
-        return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
+        // Update the category
+        $category->update($validated);
+
+        return redirect()->route('categories')
+            ->with('success', 'Category updated successfully.');
     }
 
     /**
@@ -135,7 +153,7 @@ class CategoryController extends Controller
     {
         $category->delete();
 
-        return redirect()->route('categories.index')->with('success', 'Category deleted successfully.');
+        return redirect()->route('categories')
+            ->with('success', 'Category deleted successfully.');
     }
 }
-
