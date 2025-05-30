@@ -21,7 +21,7 @@ return [
 
     'allowed_origins' => [
         'http://localhost:3000',
-        'https://reflekta-frontend.vercel.app/',
+        'https://reflekta-frontend.vercel.app',
     ],
 
     'allowed_origins_patterns' => [],
