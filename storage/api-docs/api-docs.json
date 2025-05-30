@@ -6,6 +6,169 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/categories": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get all categories",
+                "operationId": "ac9c4d978ea4e5b72915ca9728e5b8b1",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Category"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Create a new category",
+                "operationId": "cca49a87d9b0ebb9a98ad7c154b71737",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CategoryRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Category created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Category"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/categories/{category}": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get a category",
+                "operationId": "ff3ab984d3fe877eb16da6009394d694",
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "path",
+                        "description": "ID of category to return",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Category details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Category"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Category not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Update an existing category",
+                "operationId": "3146e96866d62a90bd01a7070fd61470",
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "path",
+                        "description": "ID of category to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CategoryRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Category updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Category"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Category not found"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Delete a category",
+                "operationId": "88c22abd8149aea4b3bdcb280a0fddf7",
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "path",
+                        "description": "ID of category to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Category deleted successfully"
+                    },
+                    "404": {
+                        "description": "Category not found"
+                    }
+                }
+            }
+        },
         "/api/events": {
             "get": {
                 "tags": [
@@ -223,140 +386,6 @@
                     }
                 }
             }
-        },
-        "/api/categories": {
-            "get": {
-                "tags": [
-                    "Categories"
-                ],
-                "summary": "Get all categories",
-                "operationId": "3f5817a34833d0a1f4af4548dd3aeaba",
-                "responses": {
-                    "200": {
-                        "description": "All categories"
-                    }
-                }
-            }
-        },
-        "/categories/create": {
-            "get": {
-                "tags": [
-                    "Categories"
-                ],
-                "summary": "Show form to create a new category",
-                "operationId": "3ef7e0bc5399e20ab25ef92f99cb0dae",
-                "responses": {
-                    "200": {
-                        "description": "Create category form"
-                    }
-                }
-            }
-        },
-        "/categories": {
-            "post": {
-                "tags": [
-                    "Categories"
-                ],
-                "summary": "Create a new category",
-                "operationId": "bb02f0320882db37f99574196577e446",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/CategoryRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Category created successfully"
-                    }
-                }
-            }
-        },
-        "/categories/{category}": {
-            "get": {
-                "tags": [
-                    "Categories"
-                ],
-                "summary": "Show a category",
-                "operationId": "1d1c5342ee2901551673abd31b49dc85",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/category"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Category details"
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Categories"
-                ],
-                "summary": "Delete a category",
-                "operationId": "230b7cb656677a24caa0012ba818db7f",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/category"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Category deleted successfully"
-                    }
-                }
-            },
-            "patch": {
-                "tags": [
-                    "Categories"
-                ],
-                "summary": "Update an existing category",
-                "operationId": "01d3c61b2eea33a27b0cd17d6a7abaae",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/category"
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/CategoryRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Category updated successfully"
-                    }
-                }
-            }
-        },
-        "/categories/{category}/edit": {
-            "get": {
-                "tags": [
-                    "Categories"
-                ],
-                "summary": "Show form to edit a category",
-                "operationId": "40305ea3ad8a499a88287e1188719cda",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/category"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Edit category form"
-                    }
-                }
-            }
         }
     },
     "components": {
@@ -496,6 +525,16 @@
                         "type": "string",
                         "example": "Kaaistudio's, Brussels"
                     },
+                    "latitude": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 50.8503
+                    },
+                    "longitude": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 4.3517
+                    },
                     "start_date": {
                         "type": "string",
                         "format": "date-time",
@@ -521,28 +560,16 @@
                 },
                 "type": "object"
             }
-        },
-        "parameters": {
-            "category": {
-                "name": "category",
-                "in": "path",
-                "description": "ID of the category",
-                "required": true,
-                "schema": {
-                    "type": "integer",
-                    "example": 1
-                }
-            }
         }
     },
     "tags": [
         {
-            "name": "Events",
-            "description": "API Endpoints for managing events"
+            "name": "Categories",
+            "description": "API Endpoints for managing categories"
         },
         {
-            "name": "Categories",
-            "description": "Categories"
+            "name": "Events",
+            "description": "API Endpoints for managing events"
         }
     ]
 }

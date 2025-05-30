@@ -24,9 +24,9 @@
                     <x-nav-link href="{{ route('swagger') }}" :active="request()->routeIs('swagger')">
                         {{ __('Swagger Docs') }}
                     </x-nav-link>
-             
+
                     <x-nav-link href="{{ route('categories') }}" :active="request()->routeIs('categories')">
-                        {{ __('Categories') }}
+                        {{ __('categories') }}
                     </x-nav-link>
 
 
