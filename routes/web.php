@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PicsController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -53,4 +54,5 @@ Route::middleware([
     // Route::post('/test', function () {
     //     return app(PicsController::class)->store(request());
     // })->name('test.store');
+    Route::resource('users', UserController::class);
 });
