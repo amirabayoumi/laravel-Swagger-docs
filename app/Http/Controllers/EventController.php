@@ -111,10 +111,13 @@ class EventController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'location' => 'required|string|max:255',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'organizer' => 'required|string|max:255',
-            'categories' => 'nullable|array', // Ensure categories is an array
+            'categories' => 'nullable|array',
+
         ]);
 
         $validated['user_id'] = Auth::id();
