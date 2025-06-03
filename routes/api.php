@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CategoryController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Api\RegisterController;
+use App\Http\Controllers\Api\CommentController;
+use App\Http\Controllers\Api\StoryController;
+use App\Http\Controllers\Api\UserController;
 
 
 Route::get('/user', function (Request $request) {
@@ -23,13 +26,26 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+    // User management routes
+    Route::apiResource('users', UserController::class);
+
     Route::apiResource('events', EventController::class);
     Route::apiResource('categories', CategoryController::class);
+
+    // Stories routes
+    Route::apiResource('stories', StoryController::class);
+    Route::get('users/{user}/stories', [StoryController::class, 'getStoriesByUser']);
+
+    // Comments routes
+    Route::apiResource('comments', CommentController::class)->only(['index', 'show']);
+    Route::get('users/{user}/comments', [CommentController::class, 'getCommentsByUser']);
+    Route::post('stories/{story}/comments', [CommentController::class, 'store']);
+    Route::put('comments/{comment}', [CommentController::class, 'update']);
+    Route::delete('comments/{comment}', [CommentController::class, 'destroy']);
 });
 
 
 //api/token Auth , to be used to see any api (sanctom token)
-
 
 // Route::post('/token', function (Request $request) {
 //     $request->validate([

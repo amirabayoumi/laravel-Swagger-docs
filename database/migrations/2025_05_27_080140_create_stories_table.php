@@ -17,18 +17,9 @@ return new class extends Migration
             $table->string('title');
             $table->text('content');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            //comments by user and like 
-            $table->integer('likes_count')->default(0);
-            $table->integer('comments_count')->default(0);
-            //tags for stories
-            $table->string('tags')->nullable();
-            //status of the story
-            $table->enum('status', ['draft', 'published', 'archived'])->default('draft');
-         
-
+            $table->boolean('is_published')->default(false);
         });
     }
-
     /**
      * Reverse the migrations.
      */

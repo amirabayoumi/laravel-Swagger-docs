@@ -20,6 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_admin',
     ];
 
     /**
@@ -43,5 +44,21 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Get all the stories created by the user.
+     */
+    public function stories()
+    {
+        return $this->hasMany(Story::class);
+    }
+
+    /**
+     * Get all the comments created by the user.
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

@@ -6,6 +6,8 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PicsController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\StoryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -55,4 +57,10 @@ Route::middleware([
     //     return app(PicsController::class)->store(request());
     // })->name('test.store');
     Route::resource('users', UserController::class);
+});
+
+// Comments management routes
+Route::middleware(['auth'])->group(function () {
+    Route::resource('comments', CommentController::class);
+    Route::resource('stories', StoryController::class);
 });
