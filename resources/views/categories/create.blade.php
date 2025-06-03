@@ -33,7 +33,10 @@
                 <textarea class="form-control" name="description" rows="3">{{ old('description') }}</textarea>
             </div>
 
-            <button type="submit" class="btn btn-primary">Create Category</button>
+            <div class="d-flex gap-2 mb-3">
+                <button type="submit" class="btn btn-primary">Create Category</button>
+                <a href="{{ route('categories') }}" class="btn btn-secondary">Cancel</a>
+            </div>
         </form>
     </div>
 </body>

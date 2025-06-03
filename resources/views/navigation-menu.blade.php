@@ -20,7 +20,6 @@
                         {{ __('events') }}
                     </x-nav-link>
 
-
                     <x-nav-link href="{{ route('categories') }}" :active="request()->routeIs('categories')">
                         {{ __('Categories') }}
                     </x-nav-link>
@@ -163,17 +162,27 @@
             <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                {{ __('test') }}
+
+            <x-responsive-nav-link href="{{ route('events') }}" :active="request()->routeIs('events')">
+                {{ __('Events') }}
             </x-responsive-nav-link>
+
+            <x-responsive-nav-link href="{{ route('categories') }}" :active="request()->routeIs('categories')">
+                {{ __('Categories') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link href="{{ route('stories.index') }}" :active="request()->routeIs('stories.*')">
+                {{ __('Stories') }}
+            </x-responsive-nav-link>
+
             <x-responsive-nav-link href="{{ route('comments.index') }}" :active="request()->routeIs('comments.*')">
                 {{ __('Comments') }}
             </x-responsive-nav-link>
+
             <x-responsive-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.*')">
                 {{ __('Users') }}
             </x-responsive-nav-link>
         </div>
-
 
 
 

@@ -10,6 +10,7 @@
 </head>
 
 <body>
+
     <div class="container mt-5">
         <h2>Create New Event</h2>
 
@@ -86,7 +87,10 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary">Create Event</button>
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Create Event</button>
+                <a href="{{ route('events') }}" class="btn btn-secondary">Cancel</a>
+            </div>
         </form>
     </div>
 
