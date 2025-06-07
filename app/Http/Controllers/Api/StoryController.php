@@ -53,9 +53,11 @@ class StoryController extends Controller
      */
     public function show(Story $story)
     {
+        // Load related comments
+        $story->load('comments');
 
-
-        return response()->json(['message' => 'Story not found'], 404);
+        // Return the story
+        return response()->json($story);
     }
 
     /**
@@ -67,8 +69,6 @@ class StoryController extends Controller
      */
     public function update(Request $request, Story $story)
     {
-
-
         $validated = $request->validate([
             'title' => 'string|max:255',
             'content' => 'string',
@@ -88,8 +88,6 @@ class StoryController extends Controller
      */
     public function destroy(Story $story)
     {
-
-
         $story->delete();
 
         return response()->json(['message' => 'Story deleted successfully']);
