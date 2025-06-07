@@ -7,6 +7,7 @@ use App\Models\Comment;
 use App\Models\Story;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
@@ -34,8 +35,9 @@ class CommentController extends Controller
             'content' => 'required|string',
         ]);
 
+        // Use the relationship to automatically set the story_id
         $comment = $story->comments()->create([
-            'user_id' => $validated['user_id'],
+            'user_id' => Auth::id(), // Always require authentication
             'content' => $validated['content'],
         ]);
 
@@ -62,7 +64,7 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-       
+
 
         $validated = $request->validate([
             'content' => 'required|string',
@@ -81,7 +83,7 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-     
+
 
         $comment->delete();
 
