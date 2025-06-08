@@ -23,10 +23,16 @@ class Comment extends Model
     }
 
     /**
-     * Get the user who wrote this comment.
+     * Get the user who wrote the comment.
      */
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    // Optional: Accessor for user_name
+    public function getUserNameAttribute()
+    {
+        return $this->user?->name;
     }
 }

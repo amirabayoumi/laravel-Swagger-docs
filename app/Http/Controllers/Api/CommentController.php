@@ -18,7 +18,12 @@ class CommentController extends Controller
      */
     public function index()
     {
-        $comments = Comment::with('story')->get();
+        $comments = Comment::with(['story', 'user'])->get();
+        // Add user_name to each comment
+        $comments->map(function ($comment) {
+            $comment->user_name = $comment->user?->name;
+            return $comment;
+        });
         return response()->json($comments);
     }
 
@@ -35,11 +40,12 @@ class CommentController extends Controller
             'content' => 'required|string',
         ]);
 
-        // Use the relationship to automatically set the story_id
         $comment = $story->comments()->create([
-            'user_id' => Auth::id(), // Always require authentication
+            'user_id' => Auth::id(),
             'content' => $validated['content'],
         ]);
+        $comment->load(['story', 'user']);
+        $comment->user_name = $comment->user?->name;
 
         return response()->json($comment, 201);
     }
@@ -52,7 +58,9 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
-        return response()->json($comment->load('story'));
+        $comment->load(['story', 'user']);
+        $comment->user_name = $comment->user?->name;
+        return response()->json($comment);
     }
 
     /**
@@ -64,13 +72,13 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-
-
         $validated = $request->validate([
             'content' => 'required|string',
         ]);
 
         $comment->update($validated);
+        $comment->load(['story', 'user']);
+        $comment->user_name = $comment->user?->name;
 
         return response()->json($comment);
     }
@@ -99,8 +107,13 @@ class CommentController extends Controller
     public function getCommentsByUser(User $user)
     {
         $comments = Comment::where('user_id', $user->id)
-            ->with('story')
+            ->with(['story', 'user'])
             ->get();
+
+        $comments->map(function ($comment) {
+            $comment->user_name = $comment->user?->name;
+            return $comment;
+        });
 
         return response()->json($comments);
     }

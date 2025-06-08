@@ -26,6 +26,7 @@
                                 <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Story</th>
                                 <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Content</th>
                                 <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Created At</th>
+                                <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Author</th>
                                 <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
                             </tr>
                         </thead>
@@ -36,6 +37,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap border-b border-gray-200">{{ $comment->story->title }}</td>
                                 <td class="px-6 py-4 border-b border-gray-200">{{ \Illuminate\Support\Str::limit($comment->content, 50) }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap border-b border-gray-200">{{ $comment->created_at->format('Y-m-d H:i') }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap border-b border-gray-200">{{ $comment->user_name }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap border-b border-gray-200">
                                     <a href="{{ route('comments.show', $comment->id) }}" class="text-blue-600 hover:text-blue-900 mr-3">View</a>
                                     <a href="{{ route('comments.edit', $comment->id) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>

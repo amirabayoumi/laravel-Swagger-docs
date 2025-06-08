@@ -16,7 +16,18 @@ class StoryController extends Controller
      */
     public function index()
     {
-        $stories = Story::with('comments')->where('is_published', true)->get();
+        $stories = Story::with(['user', 'comments.user'])->where('is_published', true)->get();
+
+        // Add user_name to story and comments
+        $stories = $stories->map(function ($story) {
+            $story->user_name = $story->user?->name;
+            $story->comments->map(function ($comment) {
+                $comment->user_name = $comment->user?->name;
+                return $comment;
+            });
+            return $story;
+        });
+
         return response()->json($stories);
     }
 
@@ -53,10 +64,12 @@ class StoryController extends Controller
      */
     public function show(Story $story)
     {
-        // Load related comments
-        $story->load('comments');
-
-        // Return the story
+        $story->load(['user', 'comments.user']);
+        $story->user_name = $story->user?->name;
+        $story->comments->map(function ($comment) {
+            $comment->user_name = $comment->user?->name;
+            return $comment;
+        });
         return response()->json($story);
     }
 

@@ -24,4 +24,20 @@ class Story extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+    /**
+     * Get the user who owns the story.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Accessor for the user's name.
+     */
+    public function getUserNameAttribute()
+    {
+        return $this->user?->name;
+    }
 }

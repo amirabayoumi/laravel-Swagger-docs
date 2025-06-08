@@ -43,6 +43,8 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap border-b border-gray-200">{{ $story->comments->count() }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap border-b border-gray-200">
+                                    <strong>By: {{ $story->user_name }}</strong>
+                                    <br>
                                     <a href="{{ route('stories.show', $story->id) }}" class="text-blue-600 hover:text-blue-900 mr-3">View</a>
                                     <a href="{{ route('stories.edit', $story->id) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
                                     <form action="{{ route('stories.destroy', $story->id) }}" method="POST" class="inline">

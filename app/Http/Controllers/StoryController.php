@@ -14,7 +14,7 @@ class StoryController extends Controller
      */
     public function index()
     {
-        $stories = Story::with('comments')->latest()->paginate(10);
+        $stories = Story::with(['user', 'comments.user'])->latest()->paginate(10);
         return view('stories.index', compact('stories'));
     }
 
@@ -61,7 +61,7 @@ class StoryController extends Controller
      */
     public function show(Story $story)
     {
-        $story->load('comments');
+        $story->load(['user', 'comments.user']);
         return view('stories.show', compact('story'));
     }
 

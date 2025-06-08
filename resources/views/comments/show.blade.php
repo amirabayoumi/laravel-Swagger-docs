@@ -28,7 +28,7 @@
 
                         <div class="flex justify-between text-sm text-gray-600">
                             <div>
-                                <p><span class="font-semibold">Created by:</span> {{ $comment->user->name }}</p>
+                                <p><span class="font-semibold">Created by:</span> {{ $comment->user_name }}</p>
                                 <p><span class="font-semibold">Created at:</span> {{ $comment->created_at->format('F j, Y g:i a') }}</p>
                             </div>
                             <div>
