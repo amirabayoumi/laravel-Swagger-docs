@@ -40,8 +40,18 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('comments', CommentController::class)->only(['index', 'show']);
     Route::get('users/{user}/comments', [CommentController::class, 'getCommentsByUser']);
     Route::post('stories/{story}/comments', [CommentController::class, 'store']);
-    Route::put('comments/{comment}', [CommentController::class, 'update']);
-    Route::delete('comments/{comment}', [CommentController::class, 'destroy']);
+
+
+    // Story edit/delete endpoints
+    Route::put('/stories/{story}', [StoryController::class, 'update']);
+    Route::delete('/stories/{story}', [StoryController::class, 'destroy']);
+
+    // Update and delete a comment (owner or admin)
+    Route::put('/comments/{comment}', [CommentController::class, 'update']);
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy']);
+
+    // Update user info (user or admin)
+    Route::put('/users/{user}', [UserController::class, 'update']);
 });
 
 

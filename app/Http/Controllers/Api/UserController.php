@@ -7,9 +7,11 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class UserController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of all users.
      *
@@ -49,6 +51,7 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
 
+        $this->authorize('update', $user);
 
         $validated = $request->validate([
             'name' => 'sometimes|string|max:255',
@@ -61,6 +64,7 @@ class UserController extends Controller
             ],
             'password' => 'sometimes|string|min:8',
             'is_admin' => 'sometimes|boolean',
+            'profile_photo_path' => 'sometimes|url|max:2048', // Add validation for profile photo URL
         ]);
 
 

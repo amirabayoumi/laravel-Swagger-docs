@@ -6,9 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Story;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests; // Add this import
 
 class StoryController extends Controller
 {
+    use AuthorizesRequests; // Add this trait
+
     /**
      * Display a listing of all stories.
      *
@@ -82,10 +85,12 @@ class StoryController extends Controller
      */
     public function update(Request $request, Story $story)
     {
+        $this->authorize('update', $story); // Optional: add policy for ownership
+
         $validated = $request->validate([
-            'title' => 'string|max:255',
-            'content' => 'string',
-            'is_published' => 'boolean',
+            'title' => 'sometimes|string|max:255',
+            'body' => 'sometimes|string',
+            // Add other fields as needed
         ]);
 
         $story->update($validated);
@@ -101,6 +106,8 @@ class StoryController extends Controller
      */
     public function destroy(Story $story)
     {
+        $this->authorize('delete', $story); // Optional: add policy for ownership
+
         $story->delete();
 
         return response()->json(['message' => 'Story deleted successfully']);

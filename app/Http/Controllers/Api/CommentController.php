@@ -6,11 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Story;
 use App\Models\User;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
+    use AuthorizesRequests;
+
     /**
      * Display a listing of all comments.
      *
@@ -72,13 +75,13 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
+        $this->authorize('update', $comment); // Optional: add policy for ownership
+
         $validated = $request->validate([
-            'content' => 'required|string',
+            'content' => 'required|string|max:1000',
         ]);
 
         $comment->update($validated);
-        $comment->load(['story', 'user']);
-        $comment->user_name = $comment->user?->name;
 
         return response()->json($comment);
     }
@@ -91,7 +94,7 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-
+        $this->authorize('delete', $comment); // Optional: add policy for ownership
 
         $comment->delete();
 
