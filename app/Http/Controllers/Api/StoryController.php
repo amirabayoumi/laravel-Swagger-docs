@@ -89,8 +89,8 @@ class StoryController extends Controller
 
         $validated = $request->validate([
             'title' => 'sometimes|string|max:255',
-            'body' => 'sometimes|string',
-            // Add other fields as needed
+            'content' => 'sometimes|string',
+            'is_published' => 'sometimes|boolean',
         ]);
 
         $story->update($validated);
