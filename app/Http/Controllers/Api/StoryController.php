@@ -122,8 +122,17 @@ class StoryController extends Controller
     public function getStoriesByUser(User $user)
     {
         $stories = Story::where('user_id', $user->id)
-            ->with('comments')
+            ->with(['comments.user'])
             ->get();
+
+        // Add user_name to comments
+        $stories = $stories->map(function ($story) {
+            $story->comments->map(function ($comment) {
+                $comment->user_name = $comment->user?->name;
+                return $comment;
+            });
+            return $story;
+        });
 
         return response()->json($stories);
     }
