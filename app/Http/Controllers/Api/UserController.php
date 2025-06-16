@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -116,5 +118,40 @@ class UserController extends Controller
     {
         $comments = $user->comments()->with('story')->get();
         return response()->json($comments);
+    }
+
+    /**
+     * Update the authenticated user's profile photo.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateProfilePhoto(Request $request)
+    {
+        $request->validate([
+            'profile_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        $user = User::find(Auth::id());
+
+        if ($request->hasFile('profile_photo')) {
+            // Delete old photo if it exists
+            if ($user && $user->profile_photo_path) {
+                Storage::disk('public')->delete($user->profile_photo_path);
+            }
+
+            $file = $request->file('profile_photo');
+            $filename = 'profile-photo-' . $user->id . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('profile-photos', $filename, 'public');
+
+            if ($user) {
+                $user->profile_photo_path = $path;
+                $user->save();
+            }
+        }
+
+        return response()->json([
+            'message' => 'Profile photo updated successfully',
+            'profile_photo_url' => $user->profile_photo_path ? Storage::url($user->profile_photo_path) : null
+        ]);
     }
 }

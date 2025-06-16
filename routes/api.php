@@ -42,7 +42,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('stories/{story}/comments', [CommentController::class, 'store']);
 
 
-    // Story edit/delete endpoints
+    // Story edit/delete endpoints by owner or admin
     Route::put('/stories/{story}', [StoryController::class, 'update']);
     Route::delete('/stories/{story}', [StoryController::class, 'destroy']);
 
@@ -52,23 +52,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Update user info (user or admin)
     Route::put('/users/{user}', [UserController::class, 'update']);
+    Route::post('/update-profile-photo', [UserController::class, 'updateProfilePhoto']);
 });
 
 
-//api/token Auth , to be used to see any api (sanctom token)
-
-// Route::post('/token', function (Request $request) {
-//     $request->validate([
-//         'email' => 'required|email',
-//         'password' => 'required',
-//     ]);
-
-//     if (Auth::attempt($request->only('email', 'password'))) {
-//         $user = Auth::user();
-//         $token = $user->createToken('API Token')->plainTextToken;
-
-//         return response()->json(['token' => $token]);
-//     }
-
-//     return response()->json(['error' => 'Unauthorized'], 401);
-// });
